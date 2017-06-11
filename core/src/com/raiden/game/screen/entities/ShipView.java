@@ -1,23 +1,17 @@
 package com.raiden.game.screen.entities;
 
-import com.raiden.game.PVEArena;
-import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.model.entities.MovingObjectModel;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.raiden.game.Arena;
+import com.raiden.game.model.entities.EntityModel;
 
 /**
  * A view representing a space ship
  */
-public class ShipView extends EntityView {
-    /**
-     * The time between the animation frames
-     */
-    private static final float FRAME_TIME = 0.05f;
+public abstract class ShipView extends EntityView {
 
     /**
      * The animation used when the ship is accelerating
@@ -40,73 +34,44 @@ public class ShipView extends EntityView {
      */
     private boolean accelerating;
 
+
+    //TODO: fix comment
     /**
      * Constructs a space ship model.
-     *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
      */
-    public ShipView(PVEArena game) {
-        super(game);
+    public ShipView(Arena arena) {
+        super(arena);
     }
 
     /**
      * Creates a sprite representing this space ship.
      *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
      * @return the sprite representing this space ship
      */
     @Override
-    public Sprite createSprite(PVEArena game) {
-        acceleratingAnimation = createAcceleratingAnimation(game);
-        notAcceleratingRegion = createNotAcceleratingRegion(game);
-
+    public Sprite createSprite(Arena arena) {
+        notAcceleratingRegion = createNotAcceleratingRegion(arena);
+        acceleratingAnimation = createAcceleratingAnimation(arena);
         return new Sprite(notAcceleratingRegion);
     }
 
+
+    //TODO: fix comment
     /**
      * Creates the texture used when the ship is not accelerating
      *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
      * @return the texture used when the ship is not accelerating
      */
-    private TextureRegion createNotAcceleratingRegion(PVEArena game) {
-        Texture noThrustTexture = game.getAssetManager().get("spaceship-no-thrust.png");
-        return new TextureRegion(noThrustTexture, noThrustTexture.getWidth(), noThrustTexture.getHeight());
-    }
+    protected abstract TextureRegion createNotAcceleratingRegion(Arena arena);
 
+
+    //TODO: fix comment
     /**
      * Creates the animation used when the ship is accelerating
      *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
      * @return the animation used when the ship is accelerating
      */
-    private Animation<TextureRegion> createAcceleratingAnimation(PVEArena game) {
-        Texture thrustTexture = game.getAssetManager().get("spaceship-thrust.png");
-        TextureRegion[][] thrustRegion = TextureRegion.split(thrustTexture, thrustTexture.getWidth() / 4, thrustTexture.getHeight());
-
-        TextureRegion[] frames = new TextureRegion[4];
-        System.arraycopy(thrustRegion[0], 0, frames, 0, 4);
-
-        return new Animation<TextureRegion>(FRAME_TIME, frames);
-    }
-
-    /**
-     * Updates this ship model. Also save and resets
-     * the accelerating flag from the model.
-     *
-     * @param model the model used to update this view
-     */
-    @Override
-    public void update(EntityModel model) {
-        super.update(model);
-
-        accelerating = ((MovingObjectModel)model).isAccelerating();
-        ((MovingObjectModel)model).setAccelerating(false);
-    }
+    protected abstract Animation<TextureRegion> createAcceleratingAnimation(Arena arena);
 
     /**
      * Draws the sprite from this view using a sprite batch.
@@ -125,5 +90,9 @@ public class ShipView extends EntityView {
             sprite.setRegion(notAcceleratingRegion);
 
         sprite.draw(batch);
+    }
+
+    public void setAccelerating(boolean accelerating) {
+        this.accelerating = accelerating;
     }
 }

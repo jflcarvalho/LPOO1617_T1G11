@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.0'
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.google.gms:google-services:3.0.0'
     }
 }
@@ -28,11 +28,11 @@ allprojects {
 
         android_compile_version = 25
         android_version = '25.0.1'
-        android_min_sdk_version = 15
+        android_min_sdk_version = 9
 
         appcompat_library_version = '25.2.0'
-        support_library_version = '25.2.0'
-        gms_library_version = '10.0.1'
+        support_library_version = '25.3.1'
+        gms_library_version = '10.2.6'
     }
 
     repositories {
@@ -41,6 +41,7 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
+
 }
 
 project(":android") {
@@ -71,11 +72,24 @@ project(":android") {
 project(":core") {
     apply plugin: "java"
 
-
+    sourceSets.test.java.srcDirs = ["./test"]
     dependencies {
+
+        testCompile "junit:junit:4.12"
+        testCompile "org.mockito:mockito-core:2.2.7"
+
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.4"
+
+
+
+        testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
     }
 }
 

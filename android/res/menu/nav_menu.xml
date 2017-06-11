@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group android:checkableBehavior="single">
+    <group>
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_achievements"
             android:icon="@drawable/settings_button"
-            android:title="Import" />
+            android:title="@string/achievements" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_leaderboard"
             android:icon="@drawable/settings_button"
-            android:title="Gallery" />
+            android:title="@string/leaderboard" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/settings_button"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/settings_button"
-            android:title="Tools" />
+            android:title="@string/slideshow" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/management">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/settings_button"
-                android:title="Share" />
+                android:title="@string/share" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_SignOut"
                 android:icon="@drawable/settings_button"
-                android:title="Send" />
+                android:title="@string/sign_out"/>
         </menu>
     </item>
 
